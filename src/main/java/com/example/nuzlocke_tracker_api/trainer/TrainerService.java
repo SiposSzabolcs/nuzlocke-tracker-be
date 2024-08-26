@@ -9,6 +9,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
@@ -20,9 +22,23 @@ public class TrainerService {
         return trainerRepository.findAll(PageRequest.of(page, size, Sort.by("name")));
     }
 
+    public Trainer getTrainer(Integer id) {
+
+        return trainerRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+    }
+
     public Trainer createTrainer(Trainer trainer){
         userRepository.findById(trainer.getUserId())
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundException(trainer.getUserId()));
         return trainerRepository.save(trainer);
+    }
+
+    public Trainer deleteTrainerById(Integer id) {
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+
+        trainerRepository.delete(trainer);
+        return trainer;
     }
 }
