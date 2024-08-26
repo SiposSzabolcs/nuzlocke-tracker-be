@@ -1,6 +1,7 @@
 package com.example.nuzlocke_tracker_api.trainer;
 
 import com.example.nuzlocke_tracker_api.global.ApiResponse;
+import com.example.nuzlocke_tracker_api.pokemon.PokemonDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -42,6 +43,18 @@ public class TrainerResource {
             return ResponseEntity.ok().body(trainerService.deleteTrainerById(id));
         } catch (Exception e) {
             ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("/{id}/pokemon")
+    public ResponseEntity<?> addPokemon(@PathVariable (value = "id") Integer id, @RequestBody PokemonDTO pokemonDTO) {
+        try {
+            String pokemonName = pokemonDTO.getPokemonName();
+            Trainer updatedTrainer = trainerService.addPokemon(id, pokemonName);
+            return ResponseEntity.ok(updatedTrainer);
+        }catch (Exception e) {
+            ApiResponse response = new ApiResponse(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
     }

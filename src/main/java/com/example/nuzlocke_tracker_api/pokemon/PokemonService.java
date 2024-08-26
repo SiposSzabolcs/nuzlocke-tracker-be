@@ -12,13 +12,14 @@ import java.net.http.HttpResponse;
 @Service
 public class PokemonService {
 
-    public void validatePokemon(Pokemon pokemon) {
-        if (!checkPokemon(pokemon.getName())) {
-            throw new CustomExceptions.NonValidPokemonException(pokemon.getName());
+    public void validatePokemon(String pokemonName) {
+        if (!checkPokemon(pokemonName)) {
+            throw new CustomExceptions.NonValidPokemonException(pokemonName);
         }
     }
 
     public static boolean checkPokemon(String pokemonName) {
+        System.out.println("Pokemon name:" + pokemonName);
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("https://pokeapi.co/api/v2/pokemon/" + pokemonName.toLowerCase()))
                 .method("GET", HttpRequest.BodyPublishers.noBody())
