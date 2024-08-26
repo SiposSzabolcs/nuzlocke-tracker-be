@@ -10,6 +10,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Service
 @Transactional(rollbackOn = Exception.class)
 @RequiredArgsConstructor
@@ -34,12 +36,17 @@ public class TrainerService {
         return trainerRepository.save(trainer);
     }
 
-    public Trainer deleteTrainerById(Integer id) {
+    public TrainerDTO deleteTrainerById(Integer id) {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
 
         trainerRepository.delete(trainer);
-        return trainer;
+        return new TrainerDTO(
+                trainer.getId(),
+                trainer.getName(),
+                new ArrayList<>(trainer.getPokemonParty()),
+                new ArrayList<>(trainer.getPokemonBox())
+        );
     }
 
     public Trainer addPokemon(Integer id, String pokemonName) throws Exception {
