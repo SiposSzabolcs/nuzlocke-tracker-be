@@ -62,4 +62,19 @@ public class TrainerService {
         }
         return trainerRepository.save(trainer);
     }
+
+    public Trainer removePokemon(Integer id, String pokemonName) {
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+
+        if (trainer.getPokemonParty().contains(pokemonName)) {
+            trainer.getPokemonParty().remove(pokemonName);
+        } else if (trainer.getPokemonBox().contains(pokemonName)) {
+            trainer.getPokemonBox().remove(pokemonName);
+        } else {
+            throw new CustomExceptions.PokemonNotInPartyException(pokemonName);
+        }
+
+        return trainerRepository.save(trainer);
+    }
 }

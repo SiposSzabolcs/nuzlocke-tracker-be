@@ -50,10 +50,20 @@ public class TrainerResource {
     @PostMapping("/{id}/pokemon")
     public ResponseEntity<?> addPokemon(@PathVariable (value = "id") Integer id, @RequestBody PokemonDTO pokemonDTO) {
         try {
-            String pokemonName = pokemonDTO.getPokemonName();
-            Trainer updatedTrainer = trainerService.addPokemon(id, pokemonName);
+            Trainer updatedTrainer = trainerService.addPokemon(id, pokemonDTO.getPokemonName());
             return ResponseEntity.ok(updatedTrainer);
         }catch (Exception e) {
+            ApiResponse response = new ApiResponse(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @DeleteMapping("/{id}/pokemon")
+    public ResponseEntity<?> removePokemon(@PathVariable (value = "id") Integer id, @RequestBody PokemonDTO pokemonDTO){
+        try {
+            Trainer updatedTrainer = trainerService.removePokemon(id,pokemonDTO.getPokemonName());
+            return ResponseEntity.ok(updatedTrainer);
+        } catch (Exception e) {
             ApiResponse response = new ApiResponse(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
