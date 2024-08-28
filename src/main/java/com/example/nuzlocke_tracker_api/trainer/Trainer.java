@@ -20,10 +20,6 @@ public class Trainer {
     private Integer id;
 
     private String name;
-    @ElementCollection
-    @CollectionTable(name = "trainer_pokemon_party", joinColumns = @JoinColumn(name = "trainer_id"))
-    @Column(name = "pokemon_name")
-    private List<String> pokemonParty = new ArrayList<>();
 
     @ElementCollection
     @CollectionTable(name = "trainer_pokemon_box", joinColumns = @JoinColumn(name = "trainer_id"))

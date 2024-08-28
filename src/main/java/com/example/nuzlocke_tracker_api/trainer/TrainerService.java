@@ -44,7 +44,6 @@ public class TrainerService {
         return new TrainerDTO(
                 trainer.getId(),
                 trainer.getName(),
-                new ArrayList<>(trainer.getPokemonParty()),
                 new ArrayList<>(trainer.getPokemonBox())
         );
     }
@@ -55,11 +54,8 @@ public class TrainerService {
 
         pokemonService.validatePokemon(pokemonName);
 
-        if (trainer.getPokemonParty().size() >= 6) {
-            trainer.getPokemonBox().add(pokemonName);
-        } else {
-            trainer.getPokemonParty().add(pokemonName);
-        }
+        trainer.getPokemonBox().add(pokemonName);
+
         return trainerRepository.save(trainer);
     }
 
@@ -67,9 +63,7 @@ public class TrainerService {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
 
-        if (trainer.getPokemonParty().contains(pokemonName)) {
-            trainer.getPokemonParty().remove(pokemonName);
-        } else if (trainer.getPokemonBox().contains(pokemonName)) {
+        if (trainer.getPokemonBox().contains(pokemonName)) {
             trainer.getPokemonBox().remove(pokemonName);
         } else {
             throw new CustomExceptions.PokemonNotInPartyException(pokemonName);

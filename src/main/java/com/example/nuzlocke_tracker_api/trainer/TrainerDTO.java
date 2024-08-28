@@ -14,6 +14,5 @@ import java.util.List;
 public class TrainerDTO {
     private Integer id;
     private String name;
-    private List<String> pokemonParty;
     private List<String> pokemonBox;
 }
