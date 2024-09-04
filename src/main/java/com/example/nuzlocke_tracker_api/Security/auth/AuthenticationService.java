@@ -49,7 +49,7 @@ public class AuthenticationService {
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
                     .token(jwtToken)
-                    .result(false)
+                    .result(true)
                     .msg("Authentication successful")
                     .build();
         } catch (Exception e) {
