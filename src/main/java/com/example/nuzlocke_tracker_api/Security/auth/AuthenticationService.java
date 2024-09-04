@@ -31,7 +31,7 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(user);
         return AuthenticationResponse.builder()
                 .token(jwtToken)
-                .result("success")
+                .result(true)
                 .msg("User registered successfully")
                 .build();
     }
@@ -49,12 +49,12 @@ public class AuthenticationService {
             var jwtToken = jwtService.generateToken(user);
             return AuthenticationResponse.builder()
                     .token(jwtToken)
-                    .result("success")
+                    .result(false)
                     .msg("Authentication successful")
                     .build();
         } catch (Exception e) {
             return AuthenticationResponse.builder()
-                    .result("failure")
+                    .result(false)
                     .msg("Invalid email or password")
                     .build();
         }
