@@ -26,6 +26,11 @@ public class Trainer {
     @Column(name = "pokemon_name")
     private List<String> pokemonBox = new ArrayList<>();
 
+    @ElementCollection
+    @CollectionTable(name = "route_ids", joinColumns = @JoinColumn(name = "trainer_id"))
+    @Column(name = "route_ids")
+    private List<String> routeIds = new ArrayList<>();
+
     private Integer userId;
 
 

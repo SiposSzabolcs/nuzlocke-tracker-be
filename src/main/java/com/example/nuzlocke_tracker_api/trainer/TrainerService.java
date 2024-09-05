@@ -10,6 +10,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.sql.Array;
 import java.util.ArrayList;
 
 @Service
@@ -44,7 +45,8 @@ public class TrainerService {
         return new TrainerDTO(
                 trainer.getId(),
                 trainer.getName(),
-                new ArrayList<>(trainer.getPokemonBox())
+                new ArrayList<>(trainer.getPokemonBox()),
+                new ArrayList<>(trainer.getRouteIds())
         );
     }
 
