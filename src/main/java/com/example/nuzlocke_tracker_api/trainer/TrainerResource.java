@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping("/trainers")
@@ -62,6 +63,28 @@ public class TrainerResource {
     public ResponseEntity<?> removePokemon(@PathVariable (value = "id") Integer id, @RequestBody PokemonDTO pokemonDTO){
         try {
             Trainer updatedTrainer = trainerService.removePokemon(id,pokemonDTO.getPokemonName());
+            return ResponseEntity.ok(updatedTrainer);
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PostMapping("/{id}/routes")
+    public ResponseEntity<?> addRouteIds(@PathVariable Integer id, @RequestBody List<Integer> routeIds) {
+        try {
+            Trainer updatedTrainer = trainerService.addRouteIds(id, routeIds);
+            return ResponseEntity.ok(updatedTrainer);
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
+    @PutMapping("/{id}/pokemon/clear")
+    public ResponseEntity<?> clearPokemonBox(@PathVariable(value = "id") Integer id) {
+        try {
+            Trainer updatedTrainer = trainerService.clearPokemonBox(id);
             return ResponseEntity.ok(updatedTrainer);
         } catch (Exception e) {
             ApiResponse response = new ApiResponse(e.getMessage(), null);

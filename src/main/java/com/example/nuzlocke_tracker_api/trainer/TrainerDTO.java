@@ -15,5 +15,5 @@ public class TrainerDTO {
     private Integer id;
     private String name;
     private List<String> pokemonBox;
-    private List<String> routeIds;
+    private List<Integer> routeIds;
 }

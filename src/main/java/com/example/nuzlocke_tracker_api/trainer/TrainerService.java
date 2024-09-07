@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.sql.Array;
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @Transactional(rollbackOn = Exception.class)
@@ -70,6 +71,23 @@ public class TrainerService {
         } else {
             throw new CustomExceptions.PokemonNotInPartyException(pokemonName);
         }
+
+        return trainerRepository.save(trainer);
+    }
+
+    public Trainer addRouteIds(Integer id, List<Integer> routeIds) {
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+
+        trainer.getRouteIds().addAll(routeIds);
+        return trainerRepository.save(trainer);
+    }
+
+    public Trainer clearPokemonBox(Integer id) {
+        Trainer trainer = trainerRepository.findById(id)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+
+        trainer.getPokemonBox().clear();
 
         return trainerRepository.save(trainer);
     }

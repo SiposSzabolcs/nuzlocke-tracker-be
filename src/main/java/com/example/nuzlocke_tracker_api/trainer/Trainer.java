@@ -29,7 +29,7 @@ public class Trainer {
     @ElementCollection
     @CollectionTable(name = "route_ids", joinColumns = @JoinColumn(name = "trainer_id"))
     @Column(name = "route_ids")
-    private List<String> routeIds = new ArrayList<>();
+    private List<Integer> routeIds = new ArrayList<>();
 
     private Integer userId;
 
