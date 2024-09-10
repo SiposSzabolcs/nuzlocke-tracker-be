@@ -32,6 +32,13 @@ public class TrainerService {
                 .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
     }
 
+    public List<Trainer> getTrainersByUserId(Integer userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new CustomExceptions.UserNotFoundException(userId));
+
+        return trainerRepository.findByUserId(userId);
+    }
+
     public Trainer createTrainer(Trainer trainer){
         userRepository.findById(trainer.getUserId())
                 .orElseThrow(() -> new CustomExceptions.UserNotFoundException(trainer.getUserId()));
@@ -91,4 +98,21 @@ public class TrainerService {
 
         return trainerRepository.save(trainer);
     }
+
+    public Trainer evolvePokemon(Integer trainerId, String pokemonName, String evolvedPokemonName) throws Exception {
+        Trainer trainer = trainerRepository.findById(trainerId)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(trainerId));
+
+        List<String> pokemonBox = trainer.getPokemonBox();
+        int index = pokemonBox.indexOf(pokemonName);
+
+        if (index == -1) {
+            throw new CustomExceptions.PokemonNotInPartyException(pokemonName);
+        }
+
+        pokemonBox.set(index, evolvedPokemonName);
+
+        return trainerRepository.save(trainer);
+    }
+
 }

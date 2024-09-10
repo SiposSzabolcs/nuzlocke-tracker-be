@@ -7,4 +7,5 @@ import lombok.Setter;
 @Getter
 public class PokemonDTO {
     private String pokemonName;
+    private String evolvedPokemonName;
 }

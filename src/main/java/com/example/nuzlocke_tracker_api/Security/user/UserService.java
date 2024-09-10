@@ -1,7 +1,6 @@
 package com.example.nuzlocke_tracker_api.Security.user;
 
 import com.example.nuzlocke_tracker_api.global.CustomExceptions;
-import com.example.nuzlocke_tracker_api.trainer.Trainer;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -28,9 +27,15 @@ public class UserService {
     }
 
     public UserDTO getUser(Integer id) {
-
         User user = userRepository.findById(id)
-                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
+                .orElseThrow(() -> new CustomExceptions.UserNotFoundException(id));
+
+        return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomExceptions.UserNotFoundExceptionString(email));
 
         return new UserDTO(user.getId(), user.getFirstname(), user.getLastname(), user.getEmail());
     }

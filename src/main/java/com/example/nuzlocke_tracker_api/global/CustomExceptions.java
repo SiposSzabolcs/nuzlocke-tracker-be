@@ -8,6 +8,12 @@ public class CustomExceptions {
         }
     }
 
+    public static class UserNotFoundExceptionString extends RuntimeException {
+        public UserNotFoundExceptionString(String email){
+            super("No trainer found with id: " + email);
+        }
+    }
+
     public static class UserNotFoundException extends RuntimeException {
         public UserNotFoundException(Integer id){
             super("No user found with id: " + id);

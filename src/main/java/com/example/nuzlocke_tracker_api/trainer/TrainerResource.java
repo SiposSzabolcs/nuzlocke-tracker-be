@@ -33,6 +33,17 @@ public class TrainerResource {
         }
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<?> getTrainersByUserId(@PathVariable(value = "userId") Integer userId) {
+        try {
+            List<Trainer> trainers = trainerService.getTrainersByUserId(userId);
+            return ResponseEntity.ok(trainers);
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse("An error occurred: " + e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
+
     @PostMapping
     public ResponseEntity<Trainer> createTrainer(@RequestBody Trainer trainer) {
         return ResponseEntity.created(URI.create("/trainers/" + trainer.getId())).body(trainerService.createTrainer(trainer));
@@ -92,5 +103,15 @@ public class TrainerResource {
         }
     }
 
+    @PutMapping("/{id}/pokemon/evolve")
+    public ResponseEntity<?> evolvePokemon(@PathVariable(value = "id") Integer id, @RequestBody PokemonDTO pokemonDTO) {
+        try {
+            Trainer updatedTrainer = trainerService.evolvePokemon(id, pokemonDTO.getPokemonName(), pokemonDTO.getEvolvedPokemonName());
+            return ResponseEntity.ok(updatedTrainer);
+        } catch (Exception e) {
+            ApiResponse response = new ApiResponse(e.getMessage(), null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+        }
+    }
 
 }
