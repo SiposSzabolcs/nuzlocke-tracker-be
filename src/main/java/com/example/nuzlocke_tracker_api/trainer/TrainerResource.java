@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -90,6 +91,20 @@ public class TrainerResource {
             ApiResponse response = new ApiResponse(e.getMessage(), null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
         }
+    }
+
+    @DeleteMapping("/{id}/routes/{routeId}")
+    public ResponseEntity<TrainerDTO> removeRouteId(@PathVariable Integer id, @PathVariable Integer routeId) {
+        Trainer trainer = trainerService.removeRouteId(id, routeId);
+
+        TrainerDTO trainerDTO = new TrainerDTO(
+                trainer.getId(),
+                trainer.getName(),
+                new ArrayList<>(trainer.getPokemonBox()),
+                new ArrayList<>(trainer.getRouteIds())
+        );
+
+        return ResponseEntity.ok(trainerDTO);
     }
 
     @PutMapping("/{id}/pokemon/clear")

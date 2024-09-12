@@ -90,6 +90,19 @@ public class TrainerService {
         return trainerRepository.save(trainer);
     }
 
+    public Trainer removeRouteId(Integer trainerId, Integer routeId) {
+        Trainer trainer = trainerRepository.findById(trainerId)
+                .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(trainerId));
+
+        if (trainer.getRouteIds().contains(routeId)) {
+            trainer.getRouteIds().remove(routeId);
+        } else {
+            throw new CustomExceptions.RouteIdNotFoundException(routeId);
+        }
+
+        return trainerRepository.save(trainer);
+    }
+
     public Trainer clearPokemonBox(Integer id) {
         Trainer trainer = trainerRepository.findById(id)
                 .orElseThrow(() -> new CustomExceptions.TrainerNotFoundException(id));
@@ -114,5 +127,7 @@ public class TrainerService {
 
         return trainerRepository.save(trainer);
     }
+
+
 
 }
