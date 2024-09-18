@@ -48,7 +48,7 @@ public class SecurityConfiguration {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
-        config.setAllowedOriginPatterns(List.of("https://nuzlocke-tracker-fe.onrender.com", "https://localhost:4200"));
+        config.setAllowedOriginPatterns(List.of("http://localhost:4200"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

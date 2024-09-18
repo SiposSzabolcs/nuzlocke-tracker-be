@@ -32,6 +32,7 @@ public class Trainer {
     private List<Integer> routeIds = new ArrayList<>();
 
     private Integer userId;
+    private String game;
 
 
 }

@@ -54,7 +54,8 @@ public class TrainerService {
                 trainer.getId(),
                 trainer.getName(),
                 new ArrayList<>(trainer.getPokemonBox()),
-                new ArrayList<>(trainer.getRouteIds())
+                new ArrayList<>(trainer.getRouteIds()),
+                trainer.getGame()
         );
     }
 

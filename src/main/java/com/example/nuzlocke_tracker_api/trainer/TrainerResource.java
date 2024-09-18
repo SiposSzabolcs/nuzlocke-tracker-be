@@ -101,7 +101,8 @@ public class TrainerResource {
                 trainer.getId(),
                 trainer.getName(),
                 new ArrayList<>(trainer.getPokemonBox()),
-                new ArrayList<>(trainer.getRouteIds())
+                new ArrayList<>(trainer.getRouteIds()),
+                trainer.getGame()
         );
 
         return ResponseEntity.ok(trainerDTO);
